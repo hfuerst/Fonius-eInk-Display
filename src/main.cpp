@@ -358,31 +358,24 @@ void floatTextSolar()
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-void connectWiFi()
-{
-  Serial.print("Connecting to ");
+void connectWiFi(){
+  
+  Serial.print("Connecting to ssid: ");
   Serial.println(ssid);
-  if (!UseDHCP) WiFi.config(ip, gateway, subnet, dns);
-  WiFi.begin(ssid, password);
 
-  int WifiLoopCount = 0;
-  int WifiLoopCountPrintEvery = 500;
-  int WifiLoopCountSegment;
-  while (WiFi.status() != WL_CONNECTED) {
-    WifiLoopCount++;
-    WifiLoopCountSegment = WifiLoopCount/WifiLoopCountPrintEvery;
-    if (WifiLoopCountSegment*WifiLoopCountPrintEvery == WifiLoopCount){
-      Serial.print("Connecting to ");
-      Serial.print(ssid);
-      Serial.print(" ");
-      Serial.print(WifiLoopCountSegment);
-      //Serial.print("\t"); // Tabulator
-      Serial.print("\r\n"); // Return
-    }
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
   }
-      // Verbindungs-Informationen
-  Serial.println("");
-  Serial.println("");
+  Serial.println();
+
+  Serial.print("Connected, IP address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.println("--------------------------------------");
   Serial.print("WiFi connected to: ");
   Serial.println(WiFi.SSID());
   Serial.print("Kanal............: ");
@@ -394,7 +387,7 @@ void connectWiFi()
   Serial.println(WiFi.localIP());
   Serial.print("MAC-Adresse......: ");
   Serial.println(WiFi.macAddress());
-  Serial.println();
+  Serial.println("--------------------------------------\n");
   // displayText("WiFi", 8,32,1);
 }
 
